@@ -40,10 +40,10 @@ class CrearVacante extends Component
 
         // Almacenar la imagen
         $imagen = $this->imagen->store('public/vacantes');
+        
         // buscar y retirar ruta innecesaria para asignarle el nombre a la imagen
         // $nombre_imagen = str_replace('public/vacantes/', '', $imagen);
         // dd($nombre_imagen);
-
         $datos['imagen'] = str_replace('public/vacantes/', '', $imagen);
 
         // Crear la vacante
