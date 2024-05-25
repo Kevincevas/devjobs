@@ -13,6 +13,8 @@ class VacanteController extends Controller
      */
     public function index()
     {
+        // restringiendo poder visualizar las vaacntes solo a reclutadores mediante el policy, para que funcione el policy se añadio codigo a app/Http/Controllers/Controller.php
+        $this->authorize('viewAny', Vacante::class);
         return view('vacantes.index');
     }
 
@@ -21,23 +23,19 @@ class VacanteController extends Controller
      */
     public function create()
     {
+        // restringiendo poder visualizar las vaacntes solo a reclutadores mediante el policy, para que funcione el policy se añadio codigo a app/Http/Controllers/Controller.php
+        $this->authorize('create', Vacante::class);
         return view('vacantes.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Vacante $vacante)
     {
-        //
+        return view('vacantes.show', [
+            'vacante' => $vacante,
+        ]);
     }
 
     /**
@@ -58,6 +56,17 @@ class VacanteController extends Controller
         // return view('vacantes.edit', [
         //     'vacante' => $vacante
         // ]);
+
+
+        // Usando el policy
+        // $this->authorize('update', $vacante);
+        // return view('vacantes.edit', [
+        //     'vacante' => $vacante
+        // ]);
+
+
+
+        // Forma que funciono
         
         if (Gate::allows('update', $vacante)) {
             return view('vacantes.edit', [
@@ -69,19 +78,5 @@ class VacanteController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    
 }
